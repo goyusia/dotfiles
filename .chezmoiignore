@@ -1,6 +1,7 @@
 {{ if ne .chezmoi.os "windows" }}
 .wezterm.lua
 AppData
+AutoHotkey
 {{ end }}
 
 README.md
