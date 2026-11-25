@@ -7,6 +7,12 @@
     SetImeToEnglish()
 }
 
+; Ctrl + B: tmux prefix 입력 전에 영어 IME로 전환하고 키 입력은 그대로 전달한다.
+~^b::
+{
+    SetImeToEnglish()
+}
+
 ; Ctrl + Alt + I: 현재 IME 상태 확인
 ^!i::
 {
