@@ -1,5 +1,5 @@
 -- Pull in the wezterm API
-local wezterm = require("wezterm")
+local wezterm = require('wezterm')
 
 -- This will hold the configuration.
 local config = wezterm.config_builder()
@@ -19,7 +19,7 @@ config.harfbuzz_features = { 'calt = 0', 'clig = 0', 'liga = 0' }
 config.color_scheme = 'Material Darker (base16)'
 
 -- 비프음(소리) 끄기
-config.audible_bell = "Disabled"
+config.audible_bell = 'Disabled'
 
 config.scrollback_lines = 10000
 
@@ -27,7 +27,7 @@ config.scrollback_lines = 10000
 local launch_menu = {}
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   -- wsl 사용하지 않아도 git은 깔려있겠지
-  -- config.default_prog = { "C:\\Program Files\\Git\\bin\\bash.exe", "--login", "-i" }
+  -- config.default_prog = { 'C:\\Program Files\\Git\\bin\\bash.exe', '--login', '-i' }
   config.default_domain = 'WSL:Ubuntu-26.04'
 
   table.insert(launch_menu, {
@@ -63,9 +63,21 @@ wezterm.on('format-tab-title', function(tab)
   return title
 end)
 
--- https://wezterm.org/config/lua/keyassignment/ShowLauncher.html
+-- wezterm + shift-enter + pi.dev(codex, ...)
+-- pi.dev, codex cli 같은 환경에서 개행으로 shift-enter 안먹힌다
+-- https://github.com/wezterm/wezterm/issues/7164
+-- 수정1. config.enable_kitty_keyboard = true
+-- link: https://www.reddit.com/r/wezterm/s/gWfCWWjKE3
+-- shift-enter는 되는데 한글입력이 안된다! 어쩔수 없이 포기
+-- 수정2. config.keys
+-- link: https://www.reddit.com/r/wezterm/s/ZZYLUPqCPS
+-- 멍청하게 생겼지만 확실한 방법
+
 config.keys = {
+  -- https://wezterm.org/config/lua/keyassignment/ShowLauncher.html
   { key = 'l', mods = 'ALT', action = wezterm.action.ShowLauncher },
+  { mods = 'SHIFT', key = 'Enter', action = wezterm.action.SendString('\x1b[13;2u') },
+  { mods = 'CTRL', key = 'Enter', action = wezterm.action.SendString('\x1b[13;5u') },
 }
 
 -- and finally, return the configuration to wezterm
