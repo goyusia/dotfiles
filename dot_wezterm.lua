@@ -63,5 +63,10 @@ wezterm.on('format-tab-title', function(tab)
   return title
 end)
 
+-- https://wezterm.org/config/lua/keyassignment/ShowLauncher.html
+config.keys = {
+  { key = 'l', mods = 'ALT', action = wezterm.action.ShowLauncher },
+}
+
 -- and finally, return the configuration to wezterm
 return config
