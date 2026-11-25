@@ -271,7 +271,10 @@ now_if_args(function()
 
   -- Synchronize terminal emulator background with Neovim's background to remove
   -- possibly different color padding around Neovim instance
-  MiniMisc.setup_termbg_sync()
+  -- WSL/Windows 터미널은 동기화에 필요한 OSC 11 응답을 보내지 않을 수 있음
+  if vim.fn.has('wsl') == 0 and vim.fn.has('win32') == 0 then
+    MiniMisc.setup_termbg_sync()
+  end
 end)
 
 -- Step two ===================================================================
