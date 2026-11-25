@@ -8,3 +8,7 @@ shell = { program = "C:\\Program Files\\Git\\bin\\bash.exe", args = ["--login", 
 
 [env]
 TERM = "xterm-256color"
+
+[font]
+normal = { family = "BlexMono Nerd Font", style = "Regular" }
+size = 12.0
